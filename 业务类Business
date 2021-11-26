@@ -1,0 +1,60 @@
+public class BusinessA  {
+    private IReadSaveData iReadSaveData;
+    public IReadSaveData getideaSaveData() {
+        return  iReadSaveData;
+    }
+    public void setiReadSaveData(IReadSaveData iReadSaveData)  {
+        this.iReadSaveData = iReadSaveData;
+    }
+    public BusinessA(IReadSaveData iReadSaveData) {
+        this.iReadSaveData = iReadSaveData;
+    }
+    //业务方法，保存数据，保存到哪里由实际的对象iReadSaveData决定
+    public void saveData(String data) {
+        iReadSaveData.saveData(data);
+    }
+    //业务方法，读取数据，从哪里读取由实际的对象iReadSaveData决定
+    public String readData() {
+        return  iReadSaveData.getData();
+    }
+}
+
+public class BusinessB  {
+    private IReadSaveData iReadSaveData;
+    public IReadSaveData getideaSaveData() {
+        return  iReadSaveData;
+    }
+    public void setiReadSaveData(IReadSaveData iReadSaveData)  {
+        this.iReadSaveData = iReadSaveData;
+    }
+    public BusinessB(IReadSaveData iReadSaveData) {
+        this.iReadSaveData = iReadSaveData;
+    }
+    //业务方法，保存数据，保存到哪里由实际的对象iReadSaveData决定
+    public void saveData(String data) {
+        iReadSaveData.saveData(data);
+    }
+    //业务方法，读取数据，从哪里读取由实际的对象iReadSaveData决定
+    public String readData() {
+        return  iReadSaveData.getData();
+    }
+}
+
+public class ReadSaveTestFile implements IReadSaveData  {
+    public void saveData(String data)  {
+        System.out.println("将数据保存到了文本文件中");
+    }
+    public String getData()  {
+        System.out.println("从文本文件中读取了数据");
+        return null;
+    }
+}
+public class ReadSaveTestFile implements IReadSaveData  {
+    public void saveData(String data)  {
+        System.out.println("将数据保存到了word文件中");
+    }
+    public String getData()  {
+        System.out.println("从word文件中读取了数据");
+        return null;
+    }
+}
