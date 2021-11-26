@@ -1,0 +1,15 @@
+package com.cloud.algorithm;
+public class PI {
+    public static void main(String[] args) {
+        int n = 100000;
+        int count = 0;
+        for (int i = 1; i < n; i++) {
+            double x = Math.random();
+            double y = Math.random();
+            if ((x * x + y * y) < 1) {
+                count++;
+            }
+        }
+        System.out.println("PI=" + (double) 4 * count / n);
+    }
+}
