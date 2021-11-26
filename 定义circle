@@ -1,0 +1,19 @@
+public class circle
+{
+    private double radius;
+    public circle (radius)
+    { this.radius=radius;
+    }
+public double  getradius() {
+    return this.radius;
+}
+    public void setradius(double radius)
+    {this.radius=radius;
+    }
+public double getArea()
+{return radius*radius*Math.PI;
+}
+public double getPerimeter()
+{return 2*radius*Math.PI;
+}
+}
