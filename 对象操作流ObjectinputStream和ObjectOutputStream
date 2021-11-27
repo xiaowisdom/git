@@ -1,0 +1,52 @@
+class Employee implements  Serializable {
+    private int age;
+    private String name;
+    private float salary;
+
+    public Employee(int age, String name, float salary) {
+        //构造方法给属性赋值（略）
+    }
+    //set、get方法略
+    public String toString() {
+        return "姓名；" + name + ",年龄；" + age + ",工资；" + salary;
+    }
+}
+
+import java.io.*;
+public class ObjectOutputTest {
+    public static void main(String[] args) throws Exception {
+        ObjectOutputTest test = new ObjectOutputTest();
+        Employee em = new Employee(29,"james",4000f);
+        test.WriteObj(em);
+    }
+    //对象写的操作
+    public void WriteObj(Object obj) throws Exception {
+     FileOutputStream fo = null;
+        ObjectOutputStream oss = null;
+        fo = new FileOutputStream("D；\\obj.ini");
+        oos = new ObjectOutputStream(fo);
+        oss.writeObject(obj);
+        oss.flush();
+        oss.close();
+        fo.close();
+    }
+}
+
+import java.io.*;
+public class ObjectOutputTest {
+    public static void main(String[] args) throws Exception {
+        ObjectInputTest test = new ObjectInputTest();
+        System.out.println(((Employee) test.ReadObj()).getName()); 
+    }
+    public Object ReadObj() throws Exception {//读配置信息
+        FileInputStream fi = null;
+        ObjectInputStream osi = null;
+        Object obj = null;
+        fi = new FileInputStream("D；\\obj.ini");
+        osi = new ObjectInputStream(fi);
+        obj = osi.readObject();
+        osi.close();
+        fi.close();
+        return obj;
+    }
+}
