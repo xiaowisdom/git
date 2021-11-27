@@ -1,0 +1,20 @@
+import java.io.*;
+public class ImagCopy {
+    public static void main(String[] args)  throws  IOException {
+        //Step1；创建FileInputStream和FileOutputStream的对象。
+        File file = new File("D；\\MNLS.jpg");
+        FileInputStream fin = new FileInputStream(file);
+        FileOutputStream fo = new FileOutputStream(new File("E；\\a.jpg"));
+        int num = 0;
+        if (!file.exists())  {//Step2；判断文件是否存在
+            System.out.println("源文件不存在");
+        } else  {
+            while ((num = fin.read()) != -1)  {//Step3； 文件复制
+                fo.write(num);
+            }
+            fo.flush();
+            fin.close();
+            fo.close();
+        }
+    }
+}
