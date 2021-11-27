@@ -1,0 +1,100 @@
+package ch11;
+public class FirstThread extends Thread {
+    private String name;//线程的名字
+    public FirstThread(String name) {
+        super(name) ;
+    System.out.println(name+"创建成功");
+    }
+    public void run() {
+        for (int i=0;i<3;i++) {
+            System.out.println(Thread.currentThread().getName()+"第"+1+"次运行");
+            Thread.yield();//让当前线程让出CPU
+        }
+    }
+    public static void main(String[] args) {
+        FirstThread t1=new FirstThread("第一个线程");
+        FirstThread t2=new FirstThread("第二个线程");
+        System.out.println("开始启动t1、t2线程");
+        t1.start();//开始启动t1线程，t1开始独立运行
+        t2.start();//开始启动t2线程，t2开始独立运行
+        System.out.println("main方法运行完毕");
+    }
+}
+
+public class SecondThread implements Runnable{
+    private String name;//用于显示，不是线程的名字
+    public SecondThread(String name) {
+        this.name=name;
+        system.out.println(name+"创建成功");
+    }
+    public void run() {
+        for (int i=0;i<3;i++) {
+            System.out.println(name+"第"+1+"次运行");
+            Thread.yield();//让当前线程让出CPU
+        }
+    }
+    public static void main(String[] args) {
+        SecondThread r1=new SecondThread("第一个线程");
+        SecondThread r2=new SecondThread("第二个线程");
+        Thread t1=new Thread(r1);
+        Thread t2=new Thread(r2);
+        System.out.println("开始启动t1、t2线程");
+        t1.start();//开始启动t1线程,t1开始独立运行
+        t2.start();//开始启动t2线程,t2开始独立运行
+    }
+}
+
+package ch11;
+public class priorityDemo extends Thread{
+public void run() {
+    for (int i=1;i<=5;i++) {
+        System.out.println(Thread.currentThread().getName()+"第"+1+"次运行");
+        Thread.yield();//让出CPU执行权
+    }
+}
+    public static void main(String[] args) {
+        priorityDemo t1=new priorityDemo();
+        priorityDemo t2=new priorityDemo();
+        priorityDemo t3=new priorityDemo();
+        t1.setPriority(Thread.MAX_PRIORITY);//级别为10
+        t2.setPriority(Thread.NORM_PRIORITY);//级别为5
+        t3.setPriority(Thread.MAX_PRIORITY);//级别为1
+        t1.start();t2.start();t3.start();
+    }
+}
+
+public class ThreadSleepDemo extends Thread{
+    public void run() {//线程要执行的代码需要写到run方法里
+        for (int i=1;i<=3;i++) {
+            System.out.println(Thread.currentThread().getName()+"第"+1+"次运行");
+            try  {
+                Thread.sleep(1000);//让当前线程休眠1000毫秒，即1秒钟
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        } 
+    }
+    public static void main(String[] args) {
+        ThreadSleepDemo t1=new ThreadSleepDemo();//创建t1线程
+        ThreadSleepDemo t2=new ThreadSleepDemo();//创建t2线程
+        t1.start(); t2.start();//启动t1、t2线程
+    }
+}
+
+public class ThreadJoinDemo extends Thread{
+    public void run() {//线程要执行的代码需要写到run方法里
+        for (int i=1;i<=3;i++) {
+            System.out.println(Thread.currentThread().getName()+"第"+1+"次运行");
+        }
+    }
+    public static void main(String[] args) {
+        ThreadJoinDemo t1=new ThreadJoinDemo();//创建t1线程
+        ThreadJoinDemo t2=new ThreadJoinDemo();//创建t2线程
+        t1.start();t2.start();//启动t1、t2线程
+        try {
+            t1.join();
+        } catch (InterruptedException e) {
+            System.out.println("出现错误，错误信息是；"+e.getMessage());
+        }
+    }
+}
