@@ -1,0 +1,67 @@
+import java.io.*;
+import java.net.*;
+public class ProgramA {
+    public static void main(String[] args) {
+        try {
+            Socket s = new Socket("localhost",3000);
+            System.out.println("已经连接到ProgramB");
+            InputStream in;
+            OutputStream out;
+            in=s.getInputStream();
+            out=s.getOutputStream();
+            DataOutputStream dos = new DataOutputStream(s.getOutputStream());
+            DataInputStream dis = new DataInputStream(s.getInputStream());
+            BufferedReader br =
+                    new BufferedReader(new InputStreamReader(System.in));
+            while (true) {
+                String mytmp = br.readLine();
+                dos.writeUTF(mytmp);
+                if (mytmp.trim().equals("bye")) {
+                    dos.close(); dis.close(); s.close(); break;
+                }
+                String tmp = dis.readUTF();
+                System.out.println("ProgramB说:" + tmp);
+                if (tmp.trim().equals("bye")) {
+                    dos.close(); dis.close(); s.close(); break;
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+import java.io.*;
+import java.net.*;
+public class ProgramB {
+    public static void main(String[] args) {
+        try {
+            ServerSocket sc = new ServerSocket(3000);
+            System.out.println("ProgramB已经启动，正在等待ProgramA的连接...");
+            Socket s = sc.accept();
+            System.out.println("ProgramA已经连接");
+            InputStream in;
+            OutputStream out;
+            in=s.getInputStream();
+            out=s.getOutputStream();
+            DataOutputStream dos = new DataOutputStream(s.getOutputStream());
+            DataInputStream dis = new DataInputStream(s.getInputStream());
+            BufferedReader br =
+                    new BufferedReader(new InputStreamReader(System.in));
+            while (true) {
+                String tmp = dis.readUTF();
+                System.out.println("ProgramA说: " + tmp);
+                if (tmp.trim().equals("bye")) {
+                    dos.close(); dis.close(); s.close(); break;
+                }
+                String mytmp = br.readLine();
+                dos.writeUTF(mytmp);
+                if (mytmp.trim().equals("bye")) {
+                    dos.close(); dis.close(); s.close(); break;
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
